@@ -73,11 +73,11 @@ public class UserService {
 	
 	
 	// 중복체크 
-	public String duplicate(String userId) {
+	public boolean duplicate(String userId) {
 		if(repository.existsByUserId(userId)) {
-			return "true" ;
+			return true ;
 		}
-		return "false" ;
+		return false ;
 	}
 
 	// dto -> entity
