@@ -57,13 +57,13 @@ public class UserController {
 
 	}
 	
+	// 중복체크
+	@PostMapping
+	public ResponseEntity<?> duplicate(@RequestBody UserDTO dto) {
+		return ResponseEntity.ok(service.duplicate(dto.getUserId())) ;
+	}
 	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	
@@ -73,3 +73,4 @@ public class UserController {
 	
 	
 }
+

@@ -35,19 +35,18 @@ public class UserService {
 
 	// 유저 생성
 	public UserDTO create(UserDTO dto) {
-		// 필수 필드 검증
-		if (dto.getUserId() == null || dto.getPassword() == null || dto.getUserName() == null || dto.getEmail() == null
-				|| dto.getBirthDate() == null || dto.getAddress() == null || dto.getProfilePhoto() == null) {
-			throw new IllegalArgumentException("모든 필드는 null이 될 수 없습니다. 필수 값을 확인해주세요.");
-		}
 		try {
+			// 필수 필드 검증
+			if (dto.getUserId() == null || dto.getPassword() == null || dto.getUserName() == null || dto.getEmail() == null
+					|| dto.getBirthDate() == null || dto.getAddress() == null || dto.getProfilePhoto() == null) {
+				throw new IllegalArgumentException("모든 필드는 null이 될 수 없습니다. 필수 값을 확인해주세요.");
+			}
 			// UserEntity 빌드
 			UserEntity entity = toEntity(dto);
 			final String userId = entity.getUserId();
 			if (repository.existsByUserId(userId)) {
 				log.warn("UserId already exist {}", userId);
 				throw new RuntimeException("UserName alredy exist");
-				// 중복체크
 			}
 			// 엔티티 저장
 			repository.save(entity);
@@ -71,13 +70,22 @@ public class UserService {
 		}
 
 	}
+	
+	
+	// 중복체크 
+	public String duplicate(String userId) {
+		if(repository.existsByUserId(userId)) {
+			return "true" ;
+		}
+		return "false" ;
+	}
 
 	// dto -> entity
 	public UserEntity toEntity(UserDTO dto) {
 		return UserEntity.builder().idx(dto.getIdx()).userId(dto.getUserId())
 				.password(passwordEncoder.encode(dto.getPassword())) // 비밀번호 암호화
-				.userName(dto.getUserName()).email(dto.getEmail()).birthDate(dto.getBirthDate())
-				.address(dto.getAddress()).profilePhoto(dto.getProfilePhoto()).build();
+				.userName(dto.getUserName()).email(dto.getEmail()).address(dto.getAddress())
+				.profilePhoto(dto.getProfilePhoto()).birthDate(dto.getBirthDate()).build();
 	}
 
 	// entity -> dto

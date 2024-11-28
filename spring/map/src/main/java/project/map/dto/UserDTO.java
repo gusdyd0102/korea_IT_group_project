@@ -21,11 +21,10 @@ public class UserDTO {
 	private String password; // 비밀번호
 	private String userName ; // 이름
 	private String email; // 이메일
-	private Date birthDate; // 생년월일
-	private Date signupDate; // 회원가입 날짜 
 	private String address; // 주소 
 	private String profilePhoto; // 프로필사진
-	
+	private Date birthDate; // 생년월일
+	private Date signupDate; // 회원가입 날짜 
 	
 	
 	
